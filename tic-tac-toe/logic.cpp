@@ -1,10 +1,5 @@
 #include "logic.h"
 
-// Logic::Logic()
-// {
-
-// }
-
 void Logic::startGame()
 {
 
@@ -12,11 +7,11 @@ void Logic::startGame()
 
 bool Logic::isGameOver()
 {
-
+    return true;
 }
 
 int Logic::getWinner()
 {
-
+    return 0;
 }
 

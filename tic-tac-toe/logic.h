@@ -4,17 +4,15 @@
 
 class Logic
 {
-    private:
-    Board& board;
-    Player* players[2];
+private:
+    Board board;
+    Player *players[2];
     int currentPlayer;
 
-    public:
-    // Logic();
+public:
+    Logic() = default;
 
     void startGame();
     bool isGameOver();
     int getWinner();
-
-
 };

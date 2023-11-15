@@ -7,5 +7,5 @@ Player::Player(char symbol)
 
 char Player::getSymbol() const
 {
-    
+    return 'a';
 }

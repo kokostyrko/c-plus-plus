@@ -10,7 +10,7 @@ class Board
     char** cells;
 
     public:
-    Board(int width, int height);
+    Board(int width=10, int height=10);
 
     //выводит игровое поле на экран
     void print();
