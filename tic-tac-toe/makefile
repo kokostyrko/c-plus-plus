@@ -2,25 +2,29 @@ APP=tic-tac-toe
 
 BINDIR=bin
 
+SRCDIR=source
+
+OBJDIR=obj
+
 all: $(BINDIR)/$(APP)
 
-$(BINDIR)/$(APP): board.o logic.o move.o player.o main.o
-	g++ board.o logic.o move.o player.o main.o -o $(BINDIR)/$(APP)
+$(BINDIR)/$(APP): $(OBJDIR)/board.o $(OBJDIR)/logic.o $(OBJDIR)/move.o $(OBJDIR)/player.o $(OBJDIR)/main.o
+	g++ $(OBJDIR)/board.o $(OBJDIR)/logic.o $(OBJDIR)/move.o $(OBJDIR)/player.o $(OBJDIR)/main.o -o $(BINDIR)/$(APP)
 
-board.o: board.cpp
-	g++ board.cpp -o board.o -c -std=c++20
+$(OBJDIR)/board.o: $(SRCDIR)/board.cpp
+	g++ $(SRCDIR)/board.cpp -o $(OBJDIR)/board.o -c -std=c++20
 
-logic.o: logic.cpp
-	g++ logic.cpp -o logic.o -c -std=c++20
+$(OBJDIR)/logic.o: $(SRCDIR)/logic.cpp
+	g++ $(SRCDIR)/logic.cpp -o $(OBJDIR)/logic.o -c -std=c++20
 
-move.o: move.cpp
-	g++ move.cpp -o move.o -c -std=c++20
+$(OBJDIR)/move.o: $(SRCDIR)/move.cpp
+	g++ $(SRCDIR)/move.cpp -o $(OBJDIR)/move.o -c -std=c++20
 
-player.o: player.cpp
-	g++ player.cpp -o player.o -c -std=c++20
+$(OBJDIR)/player.o: $(SRCDIR)/player.cpp
+	g++ $(SRCDIR)/player.cpp -o $(OBJDIR)/player.o -c -std=c++20
 
-main.o: main.cpp
-	g++ main.cpp -o main.o -c -std=c++20
+$(OBJDIR)/main.o: $(SRCDIR)/main.cpp
+	g++ $(SRCDIR)/main.cpp -o $(OBJDIR)/main.o -c -std=c++20
 
 clean:
 	rm -f *.o *.exe
