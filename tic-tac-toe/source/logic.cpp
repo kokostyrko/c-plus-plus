@@ -1,4 +1,4 @@
-#include "logic.h"
+#include "../include/logic.h"
 
 void Logic::startGame()
 {

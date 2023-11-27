@@ -1,4 +1,4 @@
-#include "move.h"
+#include "../include/move.h"
 
 Move::Move(int x, int y)
 {
