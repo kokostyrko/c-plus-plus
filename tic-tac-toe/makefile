@@ -21,3 +21,6 @@ player.o: player.cpp
 
 main.o: main.cpp
 	g++ main.cpp -o main.o -c -std=c++20
+
+clean:
+	rm -f *.o *.exe
