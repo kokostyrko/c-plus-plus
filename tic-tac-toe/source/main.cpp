@@ -3,6 +3,6 @@
 int main()
 {
     Logic logic;
-    logic.startGame(); 
+    logic.startGame();
     return 0;
 }
