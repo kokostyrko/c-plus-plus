@@ -1,32 +1,25 @@
 #include "../include/logic.h"
 #include <iostream>
+#include <vector>
 
 Logic::Logic()
 {
     board = Board();
-    players[0] = new Player('X');
-    players[1] = new Player('O');
+    players = {Player('X'), Player('O')};
     currentPlayer = 0;
 }
 
 Logic::Logic(const Logic &other)
 {
     board = other.board;
-
-    for (int i = 0; i < 2; i++)
-    {
-        players[i] = new Player(*other.players[i]);
-    }
-
+    players = other.players;
     currentPlayer = other.currentPlayer;
 }
 
-Logic::Logic(const Board &initialBoard, const Player *initialPlayer1,
-             const Player *initialPlayer2)
+Logic::Logic(const Board &initialBoard, const std::vector<Player> &initialPlayers)
 {
     board = initialBoard;
-    players[0] = new Player(*initialPlayer1);
-    players[1] = new Player(*initialPlayer2);
+    players = initialPlayers;
     currentPlayer = 0;
 }
 
@@ -35,12 +28,7 @@ Logic &Logic::operator=(const Logic &other)
     if (this != &other)
     {
         board = other.board;
-
-        for (int i = 0; i < 2; i++)
-        {
-            players[i] = new Player(*other.players[i]);
-        }
-
+        players = other.players;
         currentPlayer = other.currentPlayer;
     }
 
@@ -49,20 +37,7 @@ Logic &Logic::operator=(const Logic &other)
 
 bool Logic::operator==(const Logic &other) const
 {
-    if (board == other.board)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            if (players[i] != other.players[i])
-            {
-                return false;
-            }
-        }
-
-        return currentPlayer == other.currentPlayer;
-    }
-
-    return false;
+    return board == other.board && players == other.players && currentPlayer == other.currentPlayer;
 }
 
 std::istream &operator>>(std::istream &input, Logic &logic)
@@ -71,9 +46,9 @@ std::istream &operator>>(std::istream &input, Logic &logic)
     input >> logic.board;
 
     std::cout << "Enter players' symbols:" << std::endl;
-    for (int i = 0; i < 2; i++)
+    for (Player &player : logic.players)
     {
-        input >> *logic.players[i];
+        input >> player;
     }
 
     std::cout << "Enter number of the current player (0 or 1): ";
@@ -87,9 +62,9 @@ std::ostream &operator<<(std::ostream &output, const Logic &logic)
     output << "Information about the game board: " << logic.getBoard() << std::endl;
 
     output << "information about the players' symbols:" << std::endl;
-    for (int i = 0; i < 2; i++)
+    for (const Player &player : logic.players)
     {
-        output << logic.getPlayer(i) << std::endl;
+        output << player << std::endl;
     }
 
     output << "Current player: " << logic.getCurrentPlayer();
@@ -100,11 +75,6 @@ std::ostream &operator<<(std::ostream &output, const Logic &logic)
 const Board &Logic::getBoard() const
 {
     return board;
-}
-
-const Player *Logic::getPlayer(int index) const
-{
-    return players[index];
 }
 
 int Logic::getCurrentPlayer() const
