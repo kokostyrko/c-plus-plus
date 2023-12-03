@@ -15,6 +15,7 @@ public:
 
     Move &operator=(const Move &other);
     bool operator==(const Move &other) const;
+
     friend std::istream &operator>>(std::istream &input, Move &move);
     friend std::ostream &operator<<(std::ostream &output, const Move &move);
 

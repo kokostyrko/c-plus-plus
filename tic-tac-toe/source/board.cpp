@@ -1,77 +1,38 @@
 #include "../include/board.h"
 #include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 Board::Board()
 {
     width = 10;
     height = 10;
-
-    cells = new char *[height];
-    for (int i = 0; i < height; i++)
-    {
-        cells[i] = new char[width];
-        for (int j = 0; j < width; j++)
-        {
-            cells[i][j] = ' ';
-        }
-    }
+    cells = std::vector<std::string>(height, std::string(width, ' '));
 }
 
 Board::Board(const Board &other)
 {
     width = other.width;
     height = other.height;
-
-    cells = new char *[height];
-    for (int i = 0; i < height; i++)
-    {
-        cells[i] = new char[width];
-        for (int j = 0; j < width; j++)
-        {
-            cells[i][j] = other.cells[i][j];
-        }
-    }
+    cells = other.cells;
 }
 
-Board::Board(int initialWidth, int initialHeight, char **initialCells)
+Board::Board(int initialWidth, int initialHeight,
+             const std::vector<std::string> &initialCells)
 {
     width = initialWidth;
     height = initialHeight;
-
-    cells = new char *[height];
-    for (int i = 0; i < height; i++)
-    {
-        cells[i] = new char[width];
-        for (int j = 0; j < width; j++)
-        {
-            cells[i][j] = initialCells[i][j];
-        }
-    }
+    cells = initialCells;
 }
 
 Board &Board::operator=(const Board &other)
 {
     if (this != &other)
     {
-        // Освобождаем старые ресурсы
-        for (int i = 0; i < height; i++)
-        {
-            delete[] cells[i];
-        }
-        delete[] cells;
-
         width = other.width;
         height = other.height;
-
-        cells = new char *[height];
-        for (int i = 0; i < height; i++)
-        {
-            cells[i] = new char[width];
-            for (int j = 0; j < width; j++)
-            {
-                cells[i][j] = other.cells[i][j];
-            }
-        }
+        cells = other.cells;
 
         return *this;
     }
@@ -79,23 +40,7 @@ Board &Board::operator=(const Board &other)
 
 bool Board::operator==(const Board &other) const
 {
-    if (width == other.width && height == other.height)
-    {
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                if (cells[i][j] != other.cells[i][j])
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    return false;
+    return width == other.width && height == other.height && cells == other.cells;
 }
 
 std::istream &operator>>(std::istream &input, Board &board)
@@ -103,38 +48,23 @@ std::istream &operator>>(std::istream &input, Board &board)
     std::cout << "Enter width and height: ";
     input >> board.width >> board.height;
 
+    // перезапись вектора строк при вводе новых размеров поля.
+    board.cells.assign(board.height, std::string(board.width, ' '));
+
     return input;
 }
 
 std::ostream &operator<<(std::ostream &output, const Board &board)
 {
-    for (int i = 0; i < board.getHeight(); i++)
-    {
-        for (int j = 0; j < board.getWidth(); j++)
-        {
-            output << board.getCells()[i][j] << " ";
-        }
-        output << std::endl;
-    }
-
-    return output;
-}
-
-int Board::getHeight() const
-{
-    return height;
-}
-
-int Board::getWidth() const
-{
-    return width;
-}
-
-char **Board::getCells() const
-{
-    return cells;
+    // использую алгоритм for_each для итерации по элементам
+    // вектора board.cells и вывода каждой строки
+    // в поток вывода output.
+    std::for_each(board.cells.begin(), board.cells.end(),
+                  [&output](const std::string &row)
+                  { output << row << std::endl; });
 }
 
 void Board::print()
 {
+    // Реализация вывода игрового поля на экран
 }
