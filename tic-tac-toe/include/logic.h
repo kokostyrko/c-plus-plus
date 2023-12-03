@@ -23,7 +23,6 @@ public:
     friend std::ostream &operator<<(std::ostream &output, const Logic &logic);
 
     const Board &getBoard() const;
-    const Player *getPlayer(int index) const;
     int getCurrentPlayer() const;
 
     void startGame();
