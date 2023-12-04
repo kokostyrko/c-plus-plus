@@ -54,8 +54,12 @@ Logic &Logic::operator=(const Logic &other)
     if (this != &other)
     {
         board = other.board;
-        players = other.players;
         currentPlayer = other.currentPlayer;
+
+        players.clear();                      // Очистить текущий вектор players перед копированием
+        players.resize(other.players.size()); // Установить размер вектора players
+
+        std::copy(other.players.begin(), other.players.end(), players.begin());
     }
 
     return *this;
