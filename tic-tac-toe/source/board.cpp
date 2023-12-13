@@ -60,9 +60,9 @@ Board &Board::operator=(const Board &other)
         width = other.width;
         height = other.height;
         cells = other.cells;
-
-        return *this;
     }
+
+    return *this;
 }
 
 /**
@@ -112,6 +112,8 @@ std::ostream &operator<<(std::ostream &output, const Board &board)
     std::for_each(board.cells.begin(), board.cells.end(),
                   [&output](const std::string &row)
                   { output << row << std::endl; });
+    
+    return output;
 }
 
 /**
